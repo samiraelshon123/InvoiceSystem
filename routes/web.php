@@ -39,7 +39,7 @@ Route::prefix('dashboard')->middleware('auth:web')->group(function() {
     Route::resource('products', ProductController::class);
     Route::resource('invoiceDetails', InvoiceDetailsController::class);
     Route::resource('invoiceAttachment', InvoiceAttachmentController::class);
-    Route::get('section/{id}', [InvoiceController::class, 'getproducts'])->name('section');
+    Route::get('invoices/section/{id}', [InvoiceController::class, 'getproducts'])->name('section');
     Route::get('View_file/{invoice_number}/{file_name}', [InvoiceDetailsController::class, 'open_file'])->name('View_file');
     Route::get('download/{invoice_number}/{file_name}', [InvoiceDetailsController::class, 'get_file'])->name('download');
     Route::post('delete_file', [InvoiceDetailsController::class, 'destroy'])->name('delete_file');

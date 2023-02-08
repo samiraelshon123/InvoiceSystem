@@ -135,7 +135,7 @@
 @endsection
 @section('js')
     <!--Internal  Chart.bundle js -->
-    <script src="{{ URL::asset('assets/plugins/chart.js/Chart.bundle.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/chart.js/Chart.bundle.min.js') }}"></script>
 
 
     <script type="text/javascript">
