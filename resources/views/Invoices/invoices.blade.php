@@ -5,13 +5,13 @@
 
 @section('css')
 <!-- Internal Data table css -->
-<link href="{{URL::asset('assets/plugins/datatable/css/dataTables.bootstrap4.min.css')}}" rel="stylesheet" />
-<link href="{{URL::asset('assets/plugins/datatable/css/buttons.bootstrap4.min.css')}}" rel="stylesheet">
-<link href="{{URL::asset('assets/plugins/datatable/css/responsive.bootstrap4.min.css')}}" rel="stylesheet" />
-<link href="{{URL::asset('assets/plugins/datatable/css/jquery.dataTables.min.css')}}" rel="stylesheet">
-<link href="{{URL::asset('assets/plugins/datatable/css/responsive.dataTables.min.css')}}" rel="stylesheet">
-<link href="{{URL::asset('assets/plugins/select2/css/select2.min.css')}}" rel="stylesheet">
-<link href="{{ URL::asset('assets/plugins/notify/css/notifIt.css') }}" rel="stylesheet" />
+<link href="{{asset('assets/plugins/datatable/css/dataTables.bootstrap4.min.css')}}" rel="stylesheet" />
+<link href="{{asset('assets/plugins/datatable/css/buttons.bootstrap4.min.css')}}" rel="stylesheet">
+<link href="{{asset('assets/plugins/datatable/css/responsive.bootstrap4.min.css')}}" rel="stylesheet" />
+<link href="{{asset('assets/plugins/datatable/css/jquery.dataTables.min.css')}}" rel="stylesheet">
+<link href="{{asset('assets/plugins/datatable/css/responsive.dataTables.min.css')}}" rel="stylesheet">
+<link href="{{asset('assets/plugins/select2/css/select2.min.css')}}" rel="stylesheet">
+<link href="{{ asset('assets/plugins/notify/css/notifIt.css') }}" rel="stylesheet" />
 @endsection
 @section('page-header')
 				<!-- breadcrumb -->
@@ -72,10 +72,13 @@
                         <div class="col-xl-12">
                             <div class="card mg-b-20">
                                 <div class="card-header pb-0">
-                                    <div class="d-flex justify-content-between">
+
                                         <a href="{{route('invoices.create')}}" class="modal-effect btn btn-sm btn-primary" style="color:white"><i
                                             class="fas fa-plus"></i>&nbsp; اضافة فاتورة</a>
-                                    </div>
+                                        <a class="modal-effect btn btn-sm btn-primary" href="{{ route('invoice_export') }}"
+                                            style="color:white"><i class="fas fa-file-download"></i>&nbsp;تصدير اكسيل
+                                        </a>
+                                    
 
                                 </div>
                                 <div class="card-body">
@@ -150,7 +153,7 @@
                                                                             data-toggle="modal" data-target="#Transfer_invoice"><i
                                                                                 class="text-warning fas fa-exchange-alt"></i>&nbsp;&nbsp;نقل الي
                                                                             الارشيف</a>
-                                                                            <a class="dropdown-item" href="Print_invoice/{{ $invoice->id }}"><i
+                                                                          <a class="dropdown-item" href="{{route('Print_invoice', $invoice->id) }}"><i
                                                                                 class="text-success fas fa-print"></i>&nbsp;&nbsp;طباعة
                                                                             الفاتورة
                                                                         </a>
@@ -238,26 +241,40 @@
 @endsection
 @section('js')
 <!-- Internal Data tables -->
-<script src="{{URL::asset('assets/plugins/datatable/js/jquery.dataTables.min.js')}}"></script>
-<script src="{{URL::asset('assets/plugins/datatable/js/dataTables.dataTables.min.js')}}"></script>
-<script src="{{URL::asset('assets/plugins/datatable/js/dataTables.responsive.min.js')}}"></script>
-<script src="{{URL::asset('assets/plugins/datatable/js/responsive.dataTables.min.js')}}"></script>
-<script src="{{URL::asset('assets/plugins/datatable/js/jquery.dataTables.js')}}"></script>
-<script src="{{URL::asset('assets/plugins/datatable/js/dataTables.bootstrap4.js')}}"></script>
-<script src="{{URL::asset('assets/plugins/datatable/js/dataTables.buttons.min.js')}}"></script>
-<script src="{{URL::asset('assets/plugins/datatable/js/buttons.bootstrap4.min.js')}}"></script>
-<script src="{{URL::asset('assets/plugins/datatable/js/jszip.min.js')}}"></script>
-<script src="{{URL::asset('assets/plugins/datatable/js/pdfmake.min.js')}}"></script>
-<script src="{{URL::asset('assets/plugins/datatable/js/vfs_fonts.js')}}"></script>
-<script src="{{URL::asset('assets/plugins/datatable/js/buttons.html5.min.js')}}"></script>
-<script src="{{URL::asset('assets/plugins/datatable/js/buttons.print.min.js')}}"></script>
-<script src="{{URL::asset('assets/plugins/datatable/js/buttons.colVis.min.js')}}"></script>
-<script src="{{URL::asset('assets/plugins/datatable/js/dataTables.responsive.min.js')}}"></script>
-<script src="{{URL::asset('assets/plugins/datatable/js/responsive.bootstrap4.min.js')}}"></script>
-<script src="{{ URL::asset('assets/plugins/notify/js/notifIt.js') }}"></script>
-<script src="{{ URL::asset('assets/plugins/notify/js/notifit-custom.js') }}"></script>
+<script src="{{asset('assets/plugins/datatable/js/jquery.dataTables.min.js')}}"></script>
+<script src="{{asset('assets/plugins/datatable/js/dataTables.dataTables.min.js')}}"></script>
+<script src="{{asset('assets/plugins/datatable/js/dataTables.responsive.min.js')}}"></script>
+<script src="{{asset('assets/plugins/datatable/js/responsive.dataTables.min.js')}}"></script>
+<script src="{{asset('assets/plugins/datatable/js/jquery.dataTables.js')}}"></script>
+<script src="{{asset('assets/plugins/datatable/js/dataTables.bootstrap4.js')}}"></script>
+<script src="{{asset('assets/plugins/datatable/js/dataTables.buttons.min.js')}}"></script>
+<script src="{{asset('assets/plugins/datatable/js/buttons.bootstrap4.min.js')}}"></script>
+<script src="{{asset('assets/plugins/datatable/js/jszip.min.js')}}"></script>
+<script src="{{asset('assets/plugins/datatable/js/pdfmake.min.js')}}"></script>
+<script src="{{asset('assets/plugins/datatable/js/vfs_fonts.js')}}"></script>
+<script src="{{asset('assets/plugins/datatable/js/buttons.html5.min.js')}}"></script>
+<script src="{{asset('assets/plugins/datatable/js/buttons.print.min.js')}}"></script>
+<script src="{{asset('assets/plugins/datatable/js/buttons.colVis.min.js')}}"></script>
+<script src="{{asset('assets/plugins/datatable/js/dataTables.responsive.min.js')}}"></script>
+<script src="{{asset('assets/plugins/datatable/js/responsive.bootstrap4.min.js')}}"></script>
+<script src="{{ asset('assets/plugins/notify/js/notifIt.js') }}"></script>
+<script src="{{ asset('assets/plugins/notify/js/notifit-custom.js') }}"></script>
 <!--Internal  Datatable js -->
-<script src="{{URL::asset('assets/js/table-data.js')}}"></script>
+<script src="{{asset('assets/js/table-data.js')}}"></script>
 <script>
     $('#delete_invoice').on('show.bs.modal', function(event) {
-        var button = $(event.relatedT
+        var button = $(event.relatedTarget)
+        var invoice_id = button.data('invoice_id')
+        var modal = $(this)
+        modal.find('.modal-body #invoice_id').val(invoice_id);
+    })
+</script>
+<script>
+    $('#Transfer_invoice').on('show.bs.modal', function(event) {
+        var button = $(event.relatedTarget)
+        var invoice_id = button.data('invoice_id')
+        var modal = $(this)
+        modal.find('.modal-body #invoice_id').val(invoice_id);
+    })
+</script>
+@endsection

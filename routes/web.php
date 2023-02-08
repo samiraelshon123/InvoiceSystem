@@ -48,4 +48,7 @@ Route::prefix('dashboard')->middleware('auth:web')->group(function() {
     Route::get('invoice_unpaid', [InvoiceController::class, 'invoice_unpaid'])->name('invoice_unpaid');
     Route::get('invoice_partial', [InvoiceController::class, 'invoice_partial'])->name('invoice_partial');
     Route::resource('invoices_archive', InvoiceArchieveController::class);
-    R
+    Route::get('Print_invoice/{id}',[InvoiceController::class, 'Print_invoice'])->name('Print_invoice');
+    Route::get('invoice_export', [InvoiceController::class, 'export'])->name('invoice_export');
+
+});
