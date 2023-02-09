@@ -219,8 +219,11 @@
                                                                 <label class="custom-file-label" for="customFile">حدد
                                                                     المرفق</label>
                                                             </div><br><br>
+                                                            @can('اضافة مرفق')
+
                                                             <button type="submit" class="btn btn-primary btn-sm "
                                                                 name="uploadedFile">تاكيد</button>
+                                                                @endcan
                                                         </form>
                                                     </div>
 
@@ -261,6 +264,7 @@
                                                                                 class="fas fa-download"></i>&nbsp;
                                                                             تحميل</a>
 
+                                                                        @can('حذف المرفق')
 
                                                                             <button class="btn btn-outline-danger btn-sm"
                                                                                 data-toggle="modal"
@@ -269,6 +273,7 @@
                                                                                 data-id_file="{{ $attachment->id }}"
                                                                                 data-target="#delete_file">حذف</button>
 
+                                                                                @endcan
 
                                                                     </td>
                                                                 </tr>

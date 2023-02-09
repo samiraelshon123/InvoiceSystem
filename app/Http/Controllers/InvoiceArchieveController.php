@@ -7,6 +7,12 @@ use Illuminate\Http\Request;
 
 class InvoiceArchieveController extends Controller
 {
+    function __construct()
+    {
+
+        $this->middleware('permission:ارشيف الفواتير', ['only' => ['index', 'update', 'destroy']]);
+
+    }
     public function index(){
         $invoices = Invoice::onlyTrashed()->get();
         return view('Invoices.Archive_Invoices', compact('invoices'));

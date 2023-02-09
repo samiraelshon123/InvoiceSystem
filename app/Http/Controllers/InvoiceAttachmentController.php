@@ -12,6 +12,12 @@ class InvoiceAttachmentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    function __construct()
+    {
+
+        $this->middleware('permission:اضافة مرفق', ['only' => ['store']]);
+
+    }
     public function index()
     {
         //

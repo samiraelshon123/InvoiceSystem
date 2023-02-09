@@ -13,6 +13,15 @@ class SectionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    function __construct()
+    {
+
+        $this->middleware('permission:عرض الاقسام', ['only' => ['index']]);
+        $this->middleware('permission:اضافة قسم', ['only' => ['store']]);
+        $this->middleware('permission:تعديل قسم', ['only' => ['update']]);
+        $this->middleware('permission:حذف قسم', ['only' => ['destroy']]);
+
+    }
     public function index()
     {
         $sections = Section::get();

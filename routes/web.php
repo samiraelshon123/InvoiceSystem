@@ -6,7 +6,9 @@ use App\Http\Controllers\InvoiceAttachmentController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\InvoiceDetailsController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SectionController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -50,5 +52,7 @@ Route::prefix('dashboard')->middleware('auth:web')->group(function() {
     Route::resource('invoices_archive', InvoiceArchieveController::class);
     Route::get('Print_invoice/{id}',[InvoiceController::class, 'Print_invoice'])->name('Print_invoice');
     Route::get('invoice_export', [InvoiceController::class, 'export'])->name('invoice_export');
+    Route::resource('users', UserController::class);
+    Route::resource('roles', RoleController::class);
 
 });

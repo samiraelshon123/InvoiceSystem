@@ -13,6 +13,15 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    function __construct()
+    {
+
+        $this->middleware('permission:عرض المنتجات', ['only' => ['index']]);
+        $this->middleware('permission:اضافة منتج', ['only' => ['store']]);
+        $this->middleware('permission:تعديل منتج', ['only' => ['update']]);
+        $this->middleware('permission:حذف منتج', ['only' => ['destroy']]);
+
+    }
     public function index()
     {
         $products = Product::get();
