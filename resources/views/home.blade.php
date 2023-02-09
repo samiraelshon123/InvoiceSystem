@@ -95,7 +95,7 @@
                                        echo $count_invoices2 = 0;
                                     }
                                     else{
-                                       echo $count_invoices2 = $count_invoices2 / $count_all *100;
+                                       echo round($count_invoices2 = $count_invoices2 / $count_all *100).'%';
                                     }
                                     @endphp
 
@@ -136,7 +136,7 @@
                                            echo $count_invoices1 = 0;
                                         }
                                         else{
-                                           echo $count_invoices1 = $count_invoices1 / $count_all *100;
+                                           echo round($count_invoices1 = $count_invoices1 / $count_all *100).'%';
                                         }
                                     @endphp
                                 </span>
@@ -170,13 +170,13 @@
                                 <span class="text-white op-7">
                                     @php
                                         $count_all= \App\Models\Invoice::count();
-                                        $count_invoices1 = \App\Models\Invoice::where('Value_Status', 1)->count();
+                                        $count_invoices1 = \App\Models\Invoice::where('Value_Status', 3)->count();
 
                                         if($count_invoices1 == 0){
                                             echo $count_invoices1 = 0;
                                         }
                                         else{
-                                          echo $count_invoices1 = $count_invoices1 / $count_all *100;
+                                          echo round($count_invoices1 = $count_invoices1 / $count_all *100).'%';
                                         }
                                     @endphp
                                 </span>

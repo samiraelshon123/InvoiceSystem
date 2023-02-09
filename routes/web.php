@@ -1,11 +1,13 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\InvoiceArchieveController;
 use App\Http\Controllers\InvoiceAttachmentController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\InvoiceDetailsController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SectionController;
 use App\Http\Controllers\UserController;
@@ -42,6 +44,7 @@ Route::prefix('dashboard')->middleware('auth:web')->group(function() {
     Route::resource('invoiceDetails', InvoiceDetailsController::class);
     Route::resource('invoiceAttachment', InvoiceAttachmentController::class);
     Route::get('invoices/section/{id}', [InvoiceController::class, 'getproducts'])->name('section');
+    Route::get('section/{id}', [InvoiceController::class, 'getproducts'])->name('section');
     Route::get('View_file/{invoice_number}/{file_name}', [InvoiceDetailsController::class, 'open_file'])->name('View_file');
     Route::get('download/{invoice_number}/{file_name}', [InvoiceDetailsController::class, 'get_file'])->name('download');
     Route::post('delete_file', [InvoiceDetailsController::class, 'destroy'])->name('delete_file');
@@ -54,5 +57,10 @@ Route::prefix('dashboard')->middleware('auth:web')->group(function() {
     Route::get('invoice_export', [InvoiceController::class, 'export'])->name('invoice_export');
     Route::resource('users', UserController::class);
     Route::resource('roles', RoleController::class);
+    Route::get('invoices_report', [ReportController::class, 'index'])->name('invoices_report');
+    Route::post('Search_invoices', [ReportController::class, 'Search_invoices'])->name('Search_invoices');
+
+    Route::get('customers_report', [CustomerController::class, 'index'])->name('customers_report');
+    Route::post('Search_customers', [CustomerController::class, 'Search_customers'])->name('Search_customers');
 
 });
