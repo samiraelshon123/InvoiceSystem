@@ -9,6 +9,7 @@ use App\Models\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use File;
+use Illuminate\Support\Facades\File as FacadesFile;
 use Illuminate\Support\Facades\Response;
 
 class InvoiceDetailsController extends Controller
@@ -105,7 +106,7 @@ class InvoiceDetailsController extends Controller
     {
 
         $invoices = InvoiceAttachment::find($request->id_file);
-        File::delete(public_path('assets/upload/invoice_attachment/'.$request->invoice_number.'/'.$request->file_name));
+        FacadesFile::delete(public_path('assets/upload/invoice_attachment/'.$request->invoice_number.'/'.$request->file_name));
         $invoices->delete();
 
         session()->flash('delete', 'تم حذف المرفق بنجاح');
