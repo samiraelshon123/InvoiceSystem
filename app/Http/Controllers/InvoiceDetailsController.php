@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Invoice;
 use App\Models\InvoiceAttachment;
 use App\Models\InvoiceDetails;
+use App\Models\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use File;
@@ -21,9 +22,9 @@ class InvoiceDetailsController extends Controller
     {
 
         $this->middleware('permission:حذف المرفق', ['only' => ['destroy']]);
-        $this->middleware('permission:تعديل تفاصيل الفاتوره', ['only' => ['edit']]);
-        $this->middleware('permission:تحميل الفاتوره', ['only' => ['get_file']]);
-        $this->middleware('permission:عرض الفاتوره', ['only' => ['open_file']]);
+        $this->middleware('permission:عرض الفاتوره', ['only' => ['edit']]);
+        $this->middleware('permission:تحميل المرفق', ['only' => ['get_file']]);
+        $this->middleware('permission:عرض المرفق', ['only' => ['open_file']]);
 
     }
     public function index()
@@ -71,6 +72,10 @@ class InvoiceDetailsController extends Controller
      */
     public function edit($id)
     {
+        $notification = Notification::where('invoice_id', $id)->first();
+        if($notification){
+            $notification->update(['is_seen' => 1]);
+        }
         $invoices = Invoice::find($id);
         $details = InvoiceDetails::where('id_Invoice', $id)->get();
         $attachments = InvoiceAttachment::where('invoice_id', $id)->get();

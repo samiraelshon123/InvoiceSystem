@@ -251,19 +251,24 @@
                                                                     <td>{{ $attachment->Created_by }}</td>
                                                                     <td>{{ $attachment->created_at }}</td>
                                                                     <td colspan="2">
-
+                                                                        @can('عرض المرفق')
+                                                                           
                                                                         <a class="btn btn-outline-success btn-sm"
                                                                         href="{{ route('View_file', ['invoice_number'=>$invoices->invoice_number, 'file_name'=>$attachment->file_name]) }}"
                                                                             href="{{ url('View_file') }}/{{ $invoices->invoice_number }}/{{ $attachment->file_name }}"
                                                                             role="button"><i class="fas fa-eye"></i>&nbsp;
                                                                             عرض</a>
-
+ 
+                                                                        @endcan
+                                                                        @can('تحميل المرفق')
+                                                                         
                                                                         <a class="btn btn-outline-info btn-sm"
                                                                             href="{{ route('download', ['invoice_number'=>$invoices->invoice_number, 'file_name'=>$attachment->file_name]) }}"
                                                                             role="button"><i
                                                                                 class="fas fa-download"></i>&nbsp;
                                                                             تحميل</a>
-
+   
+                                                                            @endcan
                                                                         @can('حذف المرفق')
 
                                                                             <button class="btn btn-outline-danger btn-sm"

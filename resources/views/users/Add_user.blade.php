@@ -3,7 +3,7 @@
 <!-- Internal Nice-select css  -->
 <link href="{{asset('assets/plugins/jquery-nice-select/css/nice-select.css')}}" rel="stylesheet" />
 @section('title')
-اضافة مستخدم - مورا سوفت للادارة القانونية
+اضافة مستخدم - نظام الفواتير  
 @stop
 
 

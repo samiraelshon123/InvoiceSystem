@@ -6,6 +6,7 @@ use App\Exports\InvoicesExport;
 use App\Models\Invoice;
 use App\Models\InvoiceAttachment;
 use App\Models\InvoiceDetails;
+use App\Models\Notification;
 use App\Models\Product;
 use App\Models\Section;
 use App\Models\User;
@@ -14,7 +15,6 @@ use File;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Notification;
 use Maatwebsite\Excel\Facades\Excel;
 class InvoiceController extends Controller
 {
@@ -146,9 +146,14 @@ class InvoiceController extends Controller
             $request->pic-> move(public_path('/assets/upload/invoice_attachment/'. $invoice_number), $imageName);
 
         }
-        // $user = auth()->user();
-        // Notification::send($user, new AddInvoice($invoice->id));
-
+       
+        Notification::create([
+            'type' => 'AddInvoice',
+            'invoice_id' => $invoice->id,
+            'data' => 'تم اضافة فاتورة جديد بواسطة : '.auth()->user()->name,
+            'user_id' => auth()->user()->id
+        ]);
+	 
         session()->flash('Add', 'تم اضافة الفاتورة بنجاح');
         return redirect()->route('invoices.index');
     }

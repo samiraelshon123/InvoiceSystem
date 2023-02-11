@@ -115,9 +115,13 @@
                                                     <td>{{$invoice->invoice_Date}}</td>
                                                     <td>{{$invoice->Due_date}}</td>
                                                     <td>{{$invoice->product}}</td>
+                                                    @can('عرض الفاتوره')
+                                                      
                                                     <td>
                                                         <a href="{{route('invoiceDetails.edit', $invoice->id)}}"> {{$invoice->section->section_name}}</a>
                                                     </td>
+                                                      
+                                                    @endcan
                                                     <td>{{$invoice->Discount}}</td>
                                                     <td>{{$invoice->Rate_VAT}}</td>
                                                     <td>{{$invoice->Value_VAT}}</td>

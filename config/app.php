@@ -183,6 +183,8 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
+	 Fx3costa\LaravelChartJs\Providers\ChartjsServiceProvider::class,
+
 
         /*
          * Package Service Providers...

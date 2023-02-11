@@ -202,7 +202,7 @@
 
                 </div>
                 <div class="card-body" style="width: 70%">
-                    {{-- {!! $chartjs->render() !!} --}}
+                    {!! $chartjs->render() !!}
 
                 </div>
             </div>
@@ -213,7 +213,7 @@
             <div class="card card-dashboard-map-one">
                 <label class="main-content-label">نسبة احصائية الفواتير</label>
                 <div class="" style="width: 100%">
-                    {{-- {!! $chartjs_2->render() !!} --}}
+                    {!! $chartjs_2->render() !!}
                 </div>
             </div>
         </div>
