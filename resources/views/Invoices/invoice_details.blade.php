@@ -15,7 +15,7 @@
     <div class="breadcrumb-header justify-content-between">
         <div class="my-auto">
             <div class="d-flex">
-                <h4 class="content-title mb-0 my-auto">قائمة الفواتير</h4><span class="text-muted mt-1 tx-13 mr-2 mb-0">/
+                <h4 class="content-title mb-0 my-auto"><a href="{{ route('invoices.index') }}">الفواتير</a></h4><span class="text-muted mt-1 tx-13 mr-2 mb-0">/
                     تفاصيل الفاتورة</span>
             </div>
         </div>
@@ -139,6 +139,19 @@
                                                         <tr>
                                                             <th scope="row">ملاحظات</th>
                                                             <td>{{ $invoices->note }}</td>
+                                                            @if ($invoices->Value_Status == 3)
+                                                                <th scope="row">المبلغ المدفوع</th>
+                                                                <td>{{ $invoices->Total -  $invoice_payment->remainer}}</td>
+                                                                <th scope="row">الباقي</th>
+                                                                <td>{{ $invoice_payment->remainer }}</td>
+
+                                                            @elseif ($invoices->Value_Status == 1)
+                                                            <th scope="row">المبلغ المدفوع</th>
+                                                            <td>{{ $invoices->Total }}</td>
+                                                            
+                                                            @endif
+
+
                                                         </tr>
                                                     </tbody>
                                                 </table>
@@ -252,22 +265,22 @@
                                                                     <td>{{ $attachment->created_at }}</td>
                                                                     <td colspan="2">
                                                                         @can('عرض المرفق')
-                                                                           
+
                                                                         <a class="btn btn-outline-success btn-sm"
                                                                         href="{{ route('View_file', ['invoice_number'=>$invoices->invoice_number, 'file_name'=>$attachment->file_name]) }}"
                                                                             href="{{ url('View_file') }}/{{ $invoices->invoice_number }}/{{ $attachment->file_name }}"
                                                                             role="button"><i class="fas fa-eye"></i>&nbsp;
                                                                             عرض</a>
- 
+
                                                                         @endcan
                                                                         @can('تحميل المرفق')
-                                                                         
+
                                                                         <a class="btn btn-outline-info btn-sm"
                                                                             href="{{ route('download', ['invoice_number'=>$invoices->invoice_number, 'file_name'=>$attachment->file_name]) }}"
                                                                             role="button"><i
                                                                                 class="fas fa-download"></i>&nbsp;
                                                                             تحميل</a>
-   
+
                                                                             @endcan
                                                                         @can('حذف المرفق')
 

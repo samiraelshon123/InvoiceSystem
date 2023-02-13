@@ -9,7 +9,7 @@
     <div class="breadcrumb-header justify-content-between">
         <div class="my-auto">
             <div class="d-flex">
-                <h4 class="content-title mb-0 my-auto">الفواتير</h4><span class="text-muted mt-1 tx-13 mr-2 mb-0">/
+                <h4 class="content-title mb-0 my-auto"><a href="{{ route('invoices.index') }}">الفواتير</a></h4><span class="text-muted mt-1 tx-13 mr-2 mb-0">/
                     تغير حالة الدفع</span>
             </div>
         </div>
@@ -18,6 +18,15 @@
     <!-- breadcrumb -->
 @endsection
 @section('content')
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
     <!-- row -->
     <div class="row">
         <div class="col-lg-12 col-md-12">
@@ -152,6 +161,22 @@
 
                         </div><br>
 
+                        <div class="row">
+                            <div class="col">
+                                <label for="exampleTextarea"  id="paid1">المبلغ المدفوع</label>
+                                <input onkeyup="getRemainer({{$invoices->Total}}, {{ $invoice_payments }})" step="any" class="form-control" id="paid2" name="paid" placeholder=""
+                                type="number">
+                            </div>
+
+                            <div class="col">
+                                <label  id="remainer1">الباقي</label>
+                                <input step="any"  id="remainer2" class="form-control" name="remainer" placeholder=""
+                                    type="number">
+                            </div>
+
+
+                        </div><br>
+
                         <div class="d-flex justify-content-center">
                             <button type="submit" class="btn btn-primary">تحديث حالة الدفع</button>
                         </div>
@@ -185,9 +210,45 @@
     <script src="{{ asset('assets/js/form-elements.js') }}"></script>
 
     <script>
+
+        remainer1.style.display = 'none';
+        remainer2.style.display = 'none';
+        paid1.style.display = 'none';
+        paid2.style.display = 'none';
+        function getRemainer(paid, invoice_payments){
+            remainer2.value = +paid - (+paid2.value + +invoice_payments);
+           
+
+        }
+        $(document).ready(function() {
+            let remainer1 = document.getElementById('remainer1');
+            let remainer2 = document.getElementById('remainer2');
+            let paid1 = document.getElementById('paid1');
+            let paid2 = document.getElementById('paid2');
+            $('select[name="Status"]').on('change', function() {
+                var SectionId = $(this).val();
+
+                if(SectionId == 'مدفوعة جزئيا'){
+
+                    remainer1.style.display = 'block';
+                    remainer2.style.display = 'block';
+                    paid1.style.display = 'block';
+                    paid2.style.display = 'block';
+                }
+                console.log(remainer2);
+            });
+
+
+
+
+
+        });
+    </script>
+    <script>
         var date = $('.fc-datepicker').datepicker({
             dateFormat: 'yy-mm-dd'
         }).val();
 
     </script>
+
 @endsection

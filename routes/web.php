@@ -2,12 +2,14 @@
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\InvoiceArchieveController;
 use App\Http\Controllers\InvoiceAttachmentController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\InvoiceDetailsController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\RoleController;
@@ -36,14 +38,15 @@ Auth::routes();
 // Route::get('/{page}', 'AdminController@index');
 //Route::get('/{page}', [AdminController::class, 'index']);
 
-Route::get('home', [HomeController::class, 'index']);
+Route::get('home', [HomeController::class, 'index'])->name('home');
 
 
 Route::prefix('dashboard')->middleware('auth:web')->group(function() {
-	
+
     Route::resource('invoices', InvoiceController::class);
     Route::resource('sections', SectionController::class);
     Route::resource('products', ProductController::class);
+    Route::resource('contacts', ContactController::class);
     Route::resource('invoiceDetails', InvoiceDetailsController::class);
     Route::resource('invoiceAttachment', InvoiceAttachmentController::class);
     Route::get('invoices/section/{id}', [InvoiceController::class, 'getproducts'])->name('section');
@@ -65,7 +68,8 @@ Route::prefix('dashboard')->middleware('auth:web')->group(function() {
 
     Route::get('customers_report', [CustomerController::class, 'index'])->name('customers_report');
     Route::post('Search_customers', [CustomerController::class, 'Search_customers'])->name('Search_customers');
-    
+
     Route::get('seeAll', [NotificationController::class, 'seeAll'])->name('seeAll');
+    Route::get('payments/{id}', [InvoiceController::class, 'payments'])->name('payments');
 
 });

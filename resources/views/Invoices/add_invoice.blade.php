@@ -21,7 +21,7 @@
     <div class="breadcrumb-header justify-content-between">
         <div class="my-auto">
             <div class="d-flex">
-                <h4 class="content-title mb-0 my-auto">الفواتير</h4><span class="text-muted mt-1 tx-13 mr-2 mb-0">/
+                <h4 class="content-title mb-0 my-auto"><a href="{{ route('invoices.index') }}">الفواتير</a></h4><span class="text-muted mt-1 tx-13 mr-2 mb-0">/
                     اضافة فاتورة</span>
             </div>
         </div>
@@ -59,6 +59,26 @@
                         {{ csrf_field() }}
                         {{-- 1 --}}
 
+                        <div class="row">
+                            <div class="col">
+                                <label for="inputName" class="control-label">الاسم</label>
+                                <input type="text" class="form-control" id="inputName" name="name"
+                                    title="يرجي ادخال رقم الفاتورة">
+                            </div>
+
+                            <div class="col">
+                                <label>العنوان</label>
+                                <input class="form-control" name="address" placeholder=""
+                                    type="text" value="" >
+                            </div>
+
+                            <div class="col">
+                                <label>الموبايل</label>
+                                <input class="form-control" name="mobile" placeholder=""
+                                    type="text" >
+                            </div>
+
+                        </div>
                         <div class="row">
                             <div class="col">
                                 <label for="inputName" class="control-label">رقم الفاتورة</label>

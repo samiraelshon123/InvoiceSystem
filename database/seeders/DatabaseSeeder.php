@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\contact;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -17,6 +18,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        contact::create([
+            'name' => 'Programming Company',
+            'email' => 'demo@gmail.com',
+            'address' => 'Shebin El Kom',
+            'phone' => '84727648'
+        ]);
         $this->call(RoleTableSeeder::class);
         $user  = User::create([
             'name' => 'Admin',

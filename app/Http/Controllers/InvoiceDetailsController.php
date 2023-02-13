@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Invoice;
 use App\Models\InvoiceAttachment;
 use App\Models\InvoiceDetails;
+use App\Models\InvoicePayment;
 use App\Models\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -80,8 +81,9 @@ class InvoiceDetailsController extends Controller
         $invoices = Invoice::find($id);
         $details = InvoiceDetails::where('id_Invoice', $id)->get();
         $attachments = InvoiceAttachment::where('invoice_id', $id)->get();
+        $invoice_payment = InvoicePayment::where('invoice_id', $id)->get()->last();
 
-       return view('Invoices.invoice_details', compact('invoices', 'details', 'attachments'));
+       return view('Invoices.invoice_details', compact('invoices', 'details', 'attachments', 'invoice_payment'));
     }
 
     /**
@@ -127,3 +129,4 @@ class InvoiceDetailsController extends Controller
         return response()->file($file);
     }
 }
+

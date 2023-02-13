@@ -6,6 +6,7 @@ use App\Exports\InvoicesExport;
 use App\Models\Invoice;
 use App\Models\InvoiceAttachment;
 use App\Models\InvoiceDetails;
+use App\Models\InvoicePayment;
 use App\Models\Notification;
 use App\Models\Product;
 use App\Models\Section;
@@ -100,6 +101,9 @@ class InvoiceController extends Controller
 
         ]);
         $invoice = Invoice::create([
+                'name' => $request->name,
+                'address' => $request->address,
+                'mobile' => $request->mobile,
             'invoice_number' => $request->invoice_number,
             'invoice_Date' => $request->invoice_Date,
             'Due_date' => $request->Due_date,
@@ -146,14 +150,14 @@ class InvoiceController extends Controller
             $request->pic-> move(public_path('/assets/upload/invoice_attachment/'. $invoice_number), $imageName);
 
         }
-       
+
         Notification::create([
             'type' => 'AddInvoice',
             'invoice_id' => $invoice->id,
             'data' => 'تم اضافة فاتورة جديد بواسطة : '.auth()->user()->name,
             'user_id' => auth()->user()->id
         ]);
-	 
+
         session()->flash('Add', 'تم اضافة الفاتورة بنجاح');
         return redirect()->route('invoices.index');
     }
@@ -167,7 +171,9 @@ class InvoiceController extends Controller
     public function show($id)
     {
         $invoices = Invoice::find($id);
-        return view('Invoices.status_update', compact('invoices'));
+        $invoice_payments = InvoicePayment::where('invoice_id', $id)->sum('paid');
+
+        return view('Invoices.status_update', compact('invoices', 'invoice_payments'));
     }
 
     /**
@@ -178,8 +184,10 @@ class InvoiceController extends Controller
      */
     public function edit($id)
     {
+
         $invoices = Invoice::find($id);
         $sections = Section::get();
+
         return view('Invoices.invoice_edit', compact('invoices', 'sections'));
     }
 
@@ -195,6 +203,9 @@ class InvoiceController extends Controller
 
         $invoices = Invoice::find($id);
         $invoices->update([
+            'name' => $request->name,
+            'address' => $request->address,
+            'mobile' => $request->mobile,
             'invoice_number' => $request->invoice_number,
             'invoice_Date' => $request->invoice_Date,
             'Due_date' => $request->Due_date,
@@ -210,7 +221,7 @@ class InvoiceController extends Controller
         ]);
 
         session()->flash('edit', 'تم تعديل الفاتورة بنجاح');
-        return back();
+        return redirect()->route('invoices.index');
     }
 
     /**
@@ -246,17 +257,20 @@ class InvoiceController extends Controller
         return json_encode($products);
     }
     public function Status_Update(Request $request, $id){
+
         $invoices = Invoice::findOrFail($id);
 
         if ($request->Status === 'مدفوعة') {
 
             $invoices->update([
+
                 'Value_Status' => 1,
                 'Status' => $request->Status,
                 'Payment_Date' => $request->Payment_Date,
             ]);
 
             InvoiceDetails::create([
+
                 'id_Invoice' => $request->invoice_id,
                 'invoice_number' => $request->invoice_number,
                 'product' => $request->product,
@@ -270,7 +284,17 @@ class InvoiceController extends Controller
         }
 
         else {
+            $request->validate([
+                'paid' => 'required|numeric',
+                'remainer' => 'required|numeric'
+            ]);
+            InvoicePayment::create([
+                'paid' =>$request->paid,
+                'remainer' => $request->remainer,
+                'invoice_id' => $invoices->id
+            ]);
             $invoices->update([
+
                 'Value_Status' => 3,
                 'Status' => $request->Status,
                 'Payment_Date' => $request->Payment_Date,
@@ -287,6 +311,7 @@ class InvoiceController extends Controller
                 'user' => (auth()->user()->name),
             ]);
         }
+
         session()->flash('Status_Update');
         return redirect()->route('invoices.index');
 
@@ -305,12 +330,22 @@ class InvoiceController extends Controller
     }
     public function Print_invoice($id){
         $invoices = Invoice::find($id);
-        return view('invoices.Print_invoice',compact('invoices'));
+        $invoice_payments = InvoicePayment::where('invoice_id', $id)->get()->last();
+
+        $sum = InvoicePayment::where('invoice_id', $id)->sum('paid');
+       
+        return view('invoices.Print_invoice',compact('invoices', 'invoice_payments', 'sum'));
     }
     public function export()
     {
        // dd('ddd');
         return Excel::download(new InvoicesExport, 'invoices.xlsx');
+    }
+
+    public function payments($id){
+        $invoice_payments = InvoicePayment::where('invoice_id', $id)->get();
+        return view('Invoices.invoice_payments', compact('invoice_payments'));
+
     }
 
 }

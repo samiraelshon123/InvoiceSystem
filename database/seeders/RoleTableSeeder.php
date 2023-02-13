@@ -46,7 +46,7 @@ class RoleTableSeeder extends Seeder
             'حذف المرفق',
             'تحميل المرفق',
             'عرض المرفق',
-            
+
             'اضافة مستخدم',
             'تعديل مستخدم',
             'حذف مستخدم',
@@ -64,6 +64,9 @@ class RoleTableSeeder extends Seeder
             'تعديل قسم',
             'حذف قسم',
             'الاشعارات',
+            'عرض التواصل',
+            'تعديل التواصل',
+            'عرض الدفعات'
         ];
         foreach ($permission as $value){
             Permission::create([

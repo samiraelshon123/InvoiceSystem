@@ -17,7 +17,7 @@
     <div class="breadcrumb-header justify-content-between">
         <div class="my-auto">
             <div class="d-flex">
-                <h4 class="content-title mb-0 my-auto">الفواتير</h4><span class="text-muted mt-1 tx-13 mr-2 mb-0">/
+                <h4 class="content-title mb-0 my-auto"><a href="{{ route('invoices.index') }}">الفواتير</a></h4><span class="text-muted mt-1 tx-13 mr-2 mb-0">/
                     معاينة طباعة الفاتورة</span>
             </div>
         </div>
@@ -35,20 +35,19 @@
                         <div class="invoice-header">
                             <h1 class="invoice-title">فاتورة تحصيل</h1>
                             <div class="billed-from">
-                                <h6>BootstrapDash, Inc.</h6>
-                                <p>201 Something St., Something Town, YT 242, Country 6546<br>
-                                    Tel No: 324 445-4544<br>
-                                    Email: youremail@companyname.com</p>
+                                <h6>{{ \App\Models\Contact::first()->name}}</h6>
+                                <p>{{ \App\Models\Contact::first()->address}}</p>
+                                <p>{{ \App\Models\Contact::first()->email}}</p>
+                                <p>{{ \App\Models\Contact::first()->phone}}</p>
                             </div><!-- billed-from -->
                         </div><!-- invoice-header -->
                         <div class="row mg-t-20">
                             <div class="col-md">
                                 <label class="tx-gray-600">Billed To</label>
                                 <div class="billed-to">
-                                    <h6>Juan Dela Cruz</h6>
-                                    <p>4033 Patterson Road, Staten Island, NY 10301<br>
-                                        Tel No: 324 445-4544<br>
-                                        Email: youremail@companyname.com</p>
+                                    <h6>{{ \App\Models\Invoice::first()->name}}</h6>
+                                    <p>{{ \App\Models\Invoice::first()->address}}</p>
+                                    <p>{{ \App\Models\Invoice::first()->phone}}</p>
                                 </div>
                             </div>
                             <div class="col-md">
@@ -113,6 +112,21 @@
                                             <h4 class="tx-primary tx-bold">{{ number_format($invoices->Total, 2) }}</h4>
                                         </td>
                                     </tr>
+                                    @if ($invoices->Value_Status == 3)
+                                    <tr>
+                                        <td class="tx-right tx-uppercase tx-bold tx-inverse"> المبلغ المدفوع</td>
+                                        <td class="tx-right" colspan="2">
+                                            <h4 class="tx-primary tx-bold">{{ $sum }}</h4>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="tx-right tx-uppercase tx-bold tx-inverse">الباقي</td>
+                                        <td class="tx-right" colspan="2">
+                                            <h4 class="tx-primary tx-bold">{{ $invoice_payments->remainer }}</h4>
+                                        </td>
+                                    </tr>
+                                    @endif
+
                                 </tbody>
                             </table>
                         </div>
