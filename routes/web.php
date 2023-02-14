@@ -4,6 +4,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\ReportCustomerController;
 use App\Http\Controllers\InvoiceArchieveController;
 use App\Http\Controllers\InvoiceAttachmentController;
 use App\Http\Controllers\InvoiceController;
@@ -63,11 +64,12 @@ Route::prefix('dashboard')->middleware('auth:web')->group(function() {
     Route::get('invoice_export', [InvoiceController::class, 'export'])->name('invoice_export');
     Route::resource('users', UserController::class);
     Route::resource('roles', RoleController::class);
+    Route::resource('customers', CustomerController::class);
     Route::get('invoices_report', [ReportController::class, 'index'])->name('invoices_report');
     Route::post('Search_invoices', [ReportController::class, 'Search_invoices'])->name('Search_invoices');
 
-    Route::get('customers_report', [CustomerController::class, 'index'])->name('customers_report');
-    Route::post('Search_customers', [CustomerController::class, 'Search_customers'])->name('Search_customers');
+    Route::get('customers_report', [ReportCustomerController::class, 'index'])->name('customers_report');
+    Route::post('Search_customers', [ReportCustomerController::class, 'Search_customers'])->name('Search_customers');
 
     Route::get('seeAll', [NotificationController::class, 'seeAll'])->name('seeAll');
     Route::get('payments/{id}', [InvoiceController::class, 'payments'])->name('payments');

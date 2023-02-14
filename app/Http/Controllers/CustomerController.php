@@ -2,55 +2,112 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Invoice;
-use App\Models\Section;
+use App\Models\Customer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class CustomerController extends Controller
 {
-    public function index(){
+    function __construct()
+    {
 
-        $sections = Section::all();
-        return view('reports.customers_report',compact('sections'));
+        $this->middleware('permission:اضافة عميل', ['only' => ['create','store']]);
+        $this->middleware('permission:تعديل عميل', ['only' => ['edit','update']]);
+        $this->middleware('permission:حذف عميل', ['only' => ['destroy']]);
 
-      }
+    }
+    public function index(Request $request)
+    {
+        $data = Customer::orderBy('id','DESC')->paginate(5);
 
+        return view('customer.index',compact('data'))
+        ->with('i', ($request->input('page', 1) - 1) * 5);
+    }
+    public function create()
+        {
 
-      public function Search_customers(Request $request){
+            return view('customer.Add_user');
 
-
-  // في حالة البحث بدون التاريخ
-
-       if ($request->Section&& $request->start_at =='' && $request->end_at=='') {
-        if($request->Section == 'all'){
-            $invoices = Invoice::get();
-        }else{
-
-            $invoices = Invoice::select('*')->where('section_id','=',$request->Section)->where('product','=',$request->product)->get();
         }
-       
-        $sections = Section::all();
-         return view('reports.customers_report',compact('sections'))->withDetails($invoices);
-
-
-       }
-
-
-    // في حالة البحث بتاريخ
-
-       else {
-
-         $start_at = date($request->start_at);
-         $end_at = date($request->end_at);
-
-        $invoices = Invoice::whereBetween('invoice_Date',[$start_at,$end_at])->where('section_id','=',$request->Section)->where('product','=',$request->product)->get();
-         $sections = Section::all();
-         return view('reports.customers_report',compact('sections'))->withDetails($invoices);
-
-
-       }
+/**
+* Store a newly created resource in storage.
+*
+* @param  \Illuminate\Http\Request  $request
+* @return \Illuminate\Http\Response
+*/
+    public function store(Request $request)
+    {
+        $input = $this->validate($request, [
+        'name' => 'required|string',
+        'email' => 'required|email|unique:users,email',
+        'address' => 'required|string',
+        'phone' => 'required',
+        'type' => 'required'
+        ]);
 
 
 
-      }
+        $user = Customer::create($input);
+        return redirect()->route('customers.index')
+        ->with('success','تم اضافة العميل بنجاح');
+    }
+
+    // /**
+    // * Display the specified resource.
+    // *
+    // * @param  int  $id
+    // * @return \Illuminate\Http\Response
+    // */
+    public function show($id)
+    {
+    $user = Customer::find($id);
+    return view('customer.show',compact('user'));
+    }
+    /**
+    * Show the form for editing the specified resource.
+    *
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+    */
+    public function edit($id)
+    {
+    $user = Customer::find($id);
+    return view('customer.edit',compact('user'));
+    }
+    /**
+    * Update the specified resource in storage.
+    *
+    * @param  \Illuminate\Http\Request  $request
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+    */
+    public function update(Request $request, $id)
+    {
+
+        $input = $this->validate($request, [
+        'name' => 'required',
+        'email' => 'required|email|unique:users,email,'.$id,
+        'address' => 'string',
+        'phone' => '',
+        'type' => ''
+        ]);
+        $user = Customer::find($id);
+
+            $user->update($input);
+
+
+        return redirect()->route('customers.index')
+        ->with('success','تم تحديث معلومات العميل بنجاح');
+    }
+    /**
+    * Remove the specified resource from storage.
+    *
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+    */
+    public function destroy(Request $request)
+    {
+        Customer::find($request->user_id)->delete();
+        return redirect()->route('customer.index')->with('success','تم حذف العميل بنجاح');
+    }
 }

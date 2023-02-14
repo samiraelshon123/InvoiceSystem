@@ -44,21 +44,20 @@
                         {{-- 1 --}}
                         <div class="row">
                             <div class="col">
-                                <label for="inputName" class="control-label">الاسم</label>
-                                <input type="text" class="form-control" id="inputName" name="name" value="{{ $invoices->name }}"
-                                    title="يرجي ادخال رقم الفاتورة">
+                                <label class="form-label">نوع العميل</label>
+                                <select name="customer" id="select-beast" class="form-control  nice-select  custom-select">
+                                    @foreach ($customers as $customer)
+                                        <option value="{{ $customer->id }}" {{ ($invoices->customer_id == $customer->id) ? 'selected' : '' }}>{{ $customer->name }}</option>
+                                    @endforeach
+                                </select>
                             </div>
 
                             <div class="col">
-                                <label>العنوان</label>
-                                <input class="form-control" name="address" placeholder=""
-                                    type="text" value="{{ $invoices->address }}" >
+
                             </div>
 
                             <div class="col">
-                                <label>الموبايل</label>
-                                <input class="form-control" name="mobile" placeholder=""
-                                    type="text" value="{{ $invoices->mobile }}" >
+
                             </div>
 
                         </div>

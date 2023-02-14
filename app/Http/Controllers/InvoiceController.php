@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Exports\InvoicesExport;
+use App\Models\Customer;
 use App\Models\Invoice;
 use App\Models\InvoiceAttachment;
 use App\Models\InvoiceDetails;
@@ -52,8 +53,9 @@ class InvoiceController extends Controller
      */
     public function create()
     {
+        $customers = Customer::get();
         $sections = Section::get();
-        return view('Invoices.add_invoice', compact('sections'));
+        return view('Invoices.add_invoice', compact('sections', 'customers'));
     }
 
     /**
@@ -66,6 +68,7 @@ class InvoiceController extends Controller
     {
         //dd($request->all());
         $validatedData = $request->validate([
+            'customer' => 'required',
             'invoice_number' => 'required|integer',
             'invoice_Date' => 'required|date',
             'Due_date' => 'required|date',
@@ -79,6 +82,7 @@ class InvoiceController extends Controller
             'note' => 'string',
         ],[
 
+            'customer.required' =>'يرجي ادخال العميل ',
             'invoice_number.required' =>'يرجي ادخال رقم الفاتوره',
             'invoice_Date.required' =>'يرجي ادخال تاريخ الفاتوره',
             'Due_date.required' =>'يرجي ادخال تاريخ الاستحقاق',
@@ -101,9 +105,6 @@ class InvoiceController extends Controller
 
         ]);
         $invoice = Invoice::create([
-                'name' => $request->name,
-                'address' => $request->address,
-                'mobile' => $request->mobile,
             'invoice_number' => $request->invoice_number,
             'invoice_Date' => $request->invoice_Date,
             'Due_date' => $request->Due_date,
@@ -118,6 +119,7 @@ class InvoiceController extends Controller
             'Status' => 'غير مدفوعة',
             'Value_Status' => 2,
             'note' => $request->note,
+            'customer_id' => $request->customer
         ]);
 
         InvoiceDetails::create([
@@ -187,8 +189,8 @@ class InvoiceController extends Controller
 
         $invoices = Invoice::find($id);
         $sections = Section::get();
-
-        return view('Invoices.invoice_edit', compact('invoices', 'sections'));
+        $customers = Customer::get();
+        return view('Invoices.invoice_edit', compact('invoices', 'sections', 'customers'));
     }
 
     /**
@@ -203,9 +205,6 @@ class InvoiceController extends Controller
 
         $invoices = Invoice::find($id);
         $invoices->update([
-            'name' => $request->name,
-            'address' => $request->address,
-            'mobile' => $request->mobile,
             'invoice_number' => $request->invoice_number,
             'invoice_Date' => $request->invoice_Date,
             'Due_date' => $request->Due_date,
@@ -333,7 +332,7 @@ class InvoiceController extends Controller
         $invoice_payments = InvoicePayment::where('invoice_id', $id)->get()->last();
 
         $sum = InvoicePayment::where('invoice_id', $id)->sum('paid');
-       
+
         return view('invoices.Print_invoice',compact('invoices', 'invoice_payments', 'sum'));
     }
     public function export()

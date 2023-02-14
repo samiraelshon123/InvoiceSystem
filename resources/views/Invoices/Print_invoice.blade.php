@@ -45,9 +45,10 @@
                             <div class="col-md">
                                 <label class="tx-gray-600">Billed To</label>
                                 <div class="billed-to">
-                                    <h6>{{ \App\Models\Invoice::first()->name}}</h6>
-                                    <p>{{ \App\Models\Invoice::first()->address}}</p>
-                                    <p>{{ \App\Models\Invoice::first()->phone}}</p>
+                                    <h6>{{ $invoices->customer->name}}</h6>
+                                    <p>{{ $invoices->customer->address}}</p>
+                                    <p>{{ $invoices->customer->email}}</p>
+                                    <p>{{ $invoices->customer->phone}}</p>
                                 </div>
                             </div>
                             <div class="col-md">
