@@ -26,9 +26,11 @@ class UserController extends Controller
     }
     public function create()
         {
+            $userRole = [];
             $roles = Role::get();
-
-            return view('users.Add_user',compact('roles'));
+            $user = new User();
+            $route = route('users.store');
+            return view('users.form',compact('roles', 'route', 'user', 'userRole'));
 
         }
 /**
@@ -39,6 +41,7 @@ class UserController extends Controller
 */
     public function store(Request $request)
     {
+
         $this->validate($request, [
         'name' => 'required',
         'email' => 'required|email|unique:users,email',
@@ -76,10 +79,12 @@ class UserController extends Controller
     */
     public function edit($id)
     {
-    $user = User::find($id);
-    $roles = Role::get();
-    $userRole = $user->roles->pluck('name','name')->all();
-    return view('users.edit',compact('user','roles','userRole'));
+        $route = route('users.update', $id);
+        $user = User::find($id);
+        $roles = Role::get();
+        $userRole = $user->roles_name;
+
+        return view('users.form',compact('user','roles','userRole', 'route'));
     }
     /**
     * Update the specified resource in storage.
@@ -95,19 +100,19 @@ class UserController extends Controller
         'name' => 'required',
         'email' => 'required|email|unique:users,email,'.$id,
         'password' => 'same:confirm-password',
-        'roles' => 'required',
+        'roles_name' => 'required',
         'Status' => 'required'
         ]);
         $user = User::find($id);
         $input = $request->all();
-        
+
         if(!empty($input['password'])){
             $input['password'] = Hash::make($input['password']);
         }else{
             $user->update([
                 'name' => $input['name'],
                 'email' =>  $input['email'],
-                'roles' =>  $input['roles'],
+                'roles_name' =>  $input['roles_name'],
                 'Status' => $input['Status'],
             ]);
         }

@@ -80,8 +80,8 @@
                                     </td>
 
                                     <td>
-                                        @if (!empty($user->getRoleNames()))
-                                            @foreach ($user->getRoleNames() as $v)
+                                        @if (!empty($user->roles_name))
+                                            @foreach ($user->roles_name as $v)
                                                 <label class="badge badge-success">{{ $v }}</label>
                                             @endforeach
                                         @endif

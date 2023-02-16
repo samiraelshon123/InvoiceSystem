@@ -4,17 +4,30 @@
 <link href="{{asset('assets/plugins/fontawesome-free/css/all.min.css')}}" rel="stylesheet">
 <!--Internal  treeview -->
 <link href="{{asset('assets/plugins/treeview/treeview-rtl.css')}}" rel="stylesheet" type="text/css" />
+@if ($role->id != '')
 @section('title')
 تعديل الصلاحيات
 @stop
+@else
+@section('title')
+اضافة الصلاحيات
+@stop
+@endif
+
 @endsection
 @section('page-header')
 <!-- breadcrumb -->
 <div class="breadcrumb-header justify-content-between">
     <div class="my-auto">
         <div class="d-flex">
+            @if ($role->id != '')
             <h4 class="content-title mb-0 my-auto"><a href="{{ route('roles.index') }}">الصلاحيات</a></h4><span class="text-muted mt-1 tx-13 mr-2 mb-0">/ تعديل
                 الصلاحيات</span>
+                @else
+                <h4 class="content-title mb-0 my-auto"><a href="{{ route('roles.index') }}">الصلاحيات</a></h4><span class="text-muted mt-1 tx-13 mr-2 mb-0">/ اضافة
+                    الصلاحيات</span>
+            @endif
+
         </div>
     </div>
 </div>
@@ -37,9 +50,12 @@
 @endif
 
 
-<form action="{{route('roles.update', $role->id)}}" method="POST">
+<form action="{{$route}}" method="POST">
     @csrf
+    @if ($role->id != '')
     @method('PUT')
+    @endif
+
 <!-- row -->
 <div class="row">
     <div class="col-md-12">
@@ -59,7 +75,7 @@
                                 <ul>
                                     <li>
                                         @foreach($permission as $value)
-                                        <label><input type="checkbox" name="permission[]" value="{{$value->id}}">
+                                        <label><input type="checkbox" name="permission[]" value="{{$value->id}}" {{ (in_array($value->id, $rolePermissions) ? 'checked' : '') }}>
                                             {{ $value->name }}</label>
                                         <br />
                                         @endforeach
@@ -70,7 +86,12 @@
                         </ul>
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-12 text-center">
+                        @if ($role->id != '')
                         <button type="submit" class="btn btn-main-primary">تحديث</button>
+                        @else
+                        <button type="submit" class="btn btn-main-primary">تاكيد</button>
+                        @endif
+
                     </div>
                     <!-- /col -->
                 </div>

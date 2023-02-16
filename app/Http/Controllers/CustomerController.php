@@ -25,8 +25,9 @@ class CustomerController extends Controller
     }
     public function create()
         {
-
-            return view('customer.Add_user');
+            $user = new Customer();
+            $route = route('customers.store');
+            return view('customer.form', compact('user', 'route'));
 
         }
 /**
@@ -71,8 +72,10 @@ class CustomerController extends Controller
     */
     public function edit($id)
     {
-    $user = Customer::find($id);
-    return view('customer.edit',compact('user'));
+        $user = Customer::find($id);
+        $route = route('customers.update', $id);
+        return view('customer.form', compact('user', 'route'));
+
     }
     /**
     * Update the specified resource in storage.

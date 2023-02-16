@@ -19,6 +19,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File as FacadesFile;
 use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
+use PhpParser\Node\Expr\New_;
+
 class InvoiceController extends Controller
 {
     /**
@@ -57,7 +59,9 @@ class InvoiceController extends Controller
     {
         $customers = Customer::get();
         $sections = Section::get();
-        return view('Invoices.add_invoice', compact('sections', 'customers'));
+        $invoice = New Invoice();
+        $route = route('invoices.store');
+        return view('Invoices.form_invoice', compact('sections', 'customers', 'invoice', 'route'));
     }
 
     /**
@@ -189,10 +193,11 @@ class InvoiceController extends Controller
     public function edit($id)
     {
 
-        $invoices = Invoice::find($id);
+        $invoice = Invoice::find($id);
         $sections = Section::get();
         $customers = Customer::get();
-        return view('Invoices.invoice_edit', compact('invoices', 'sections', 'customers'));
+        $route = route('invoices.update', $id);
+        return view('Invoices.form_invoice', compact('invoice', 'sections', 'customers', 'route'));
     }
 
     /**

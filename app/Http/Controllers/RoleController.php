@@ -26,8 +26,11 @@ class RoleController extends Controller
     }
     public function create()
     {
-    $permission = Permission::get();
-    return view('roles.create',compact('permission'));
+        $rolePermissions = [];
+        $route = route('roles.store');
+        $role = new Role();
+        $permission = Permission::get();
+        return view('roles.form',compact('permission', 'route', 'role', 'rolePermissions'));
     }
     /**
     * Store a newly created resource in storage.
@@ -43,8 +46,8 @@ class RoleController extends Controller
         ]);
         $role = Role::create(['name' => $request->input('name')]);
         $role->syncPermissions($request->input('permission'));
-        return redirect()->route('roles.index')
-        ->with('success','Role created successfully');
+        session()->flash('Add', 'تم اضافة الصلاحيات بنجاح');
+        return redirect()->route('roles.index');
     }
     /**
     * Display the specified resource.
@@ -68,13 +71,14 @@ class RoleController extends Controller
     */
     public function edit($id)
     {
+        $route = route('roles.update', $id);
         $role = Role::find($id);
         $permission = Permission::get();
         $rolePermissions = DB::table("role_has_permissions")->where("role_has_permissions.role_id",$id)
         ->pluck('role_has_permissions.permission_id','role_has_permissions.permission_id')
         ->all();
 
-        return view('roles.edit',compact('role','permission','rolePermissions'));
+        return view('roles.form',compact('role','permission','rolePermissions', 'route'));
     }
     /**
     * Update the specified resource in storage.
@@ -85,6 +89,7 @@ class RoleController extends Controller
     */
     public function update(Request $request, $id)
     {
+
         $this->validate($request, [
         'name' => 'required',
         'permission' => 'required',
@@ -93,8 +98,8 @@ class RoleController extends Controller
         $role->name = $request->input('name');
         $role->save();
         $role->syncPermissions($request->input('permission'));
-        return redirect()->route('roles.index')
-        ->with('success','Role updated successfully');
+        session()->flash('edit', 'تم تعديل الصلاحيات بنجاح');
+        return redirect()->route('roles.index');
     }
     /**
     * Remove the specified resource from storage.

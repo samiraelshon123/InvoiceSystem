@@ -2,9 +2,16 @@
 @section('css')
 <!-- Internal Nice-select css  -->
 <link href="{{asset('assets/plugins/jquery-nice-select/css/nice-select.css')}}" rel="stylesheet" />
+@if ($user->id != '')
 @section('title')
-تعديل عميل - نظام الفواتير
+تعديل مستخدم - نظام الفواتير
 @stop
+@else
+@section('title')
+اضافة مستخدم - نظام الفواتير
+@stop
+
+@endif
 
 
 @endsection
@@ -13,8 +20,14 @@
 <div class="breadcrumb-header justify-content-between">
     <div class="my-auto">
         <div class="d-flex">
+            @if ($user->id != '')
             <h4 class="content-title mb-0 my-auto"><a href="{{ route('home') }}">الرئيسيه</a></h4><span class="text-muted mt-1 tx-13 mr-2 mb-0">/ تعديل
-                عميل</span>
+                مستخدم</span>
+                @else
+                <h4 class="content-title mb-0 my-auto"><a href="{{ route('home') }}">الرئيسيه</a></h4><span class="text-muted mt-1 tx-13 mr-2 mb-0">/ اضافة
+                    مستخدم</span>
+            @endif
+
         </div>
     </div>
 </div>
@@ -43,13 +56,15 @@
             <div class="card-body">
                 <div class="col-lg-12 margin-tb">
                     <div class="pull-right">
-                        <a class="btn btn-primary btn-sm" href="{{ route('customers.index') }}">رجوع</a>
+                        <a class="btn btn-primary btn-sm" href="{{ route('users.index') }}">رجوع</a>
                     </div>
                 </div><br>
 
-                <form action="{{route('customers.update', $user->id)}}" method="POST">
+                <form action="{{$route}}" method="POST">
                     @csrf
+                    @if ($user->id != '')
                     @method('PUT')
+                    @endif
                 <div class="">
 
                     <div class="row mg-b-20">
@@ -66,36 +81,51 @@
                         </div>
                     </div>
 
-
                 </div>
 
                 <div class="row mg-b-20">
-                    <div class="parsley-input col-md-6" id="fnWrapper">
-                        <label>رقم الموبايل: <span class="tx-danger">*</span></label>
-                        <input type="text" class="form-control" name="phone" value="{{$user->phone}}" required>
-
+                    <div class="parsley-input col-md-6 mg-t-20 mg-md-t-0" id="lnWrapper">
+                        <label>كلمة المرور: <span class="tx-danger">*</span></label>
+                        <input type="password" class="form-control" name="password" >
                     </div>
 
                     <div class="parsley-input col-md-6 mg-t-20 mg-md-t-0" id="lnWrapper">
-                        <label> العنوان: <span class="tx-danger">*</span></label>
-                        <input type="address" class="form-control" name="address" value="{{$user->address}}" required>
-
+                        <label> تاكيد كلمة المرور: <span class="tx-danger">*</span></label>
+                        <input type="password" class="form-control" name="confirm-password" >
                     </div>
                 </div>
+
                 <div class="row row-sm mg-b-20">
                     <div class="col-lg-6">
-                        <label class="form-label">نوع العميل</label>
-                        <select name="type" id="select-beast" class="form-control  nice-select  custom-select">
-                           
-                            <option value="1" {{($user->type ==1) ? 'selected' : '' }}>مورد</option>
-                            <option value="0" {{($user->type ==0) ? 'selected' : '' }}>زبون</option>
+                        <label class="form-label">حالة المستخدم</label>
+                        <select name="Status" id="select-beast" class="form-control  nice-select  custom-select">
+                            <option value="{{ $user->Status}}">{{ $user->Status}}</option>
+                            <option value="مفعل">مفعل</option>
+                            <option value="غير مفعل">غير مفعل</option>
                         </select>
                     </div>
                 </div>
 
+                <div class="row mg-b-20">
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="form-group">
+                            <strong>نوع المستخدم</strong>
+                            <select name="roles_name[]" id="" class="form-control" multiple>
+                                @foreach ($roles as $role)
+                                    <option value="{{$role->name}}" {{ (in_array($role->name, $userRole)) ? 'selected' : '' }}>{{$role->name}}</option>
+                                @endforeach
+                            </select>
 
+                        </div>
+                    </div>
+                </div>
                 <div class="mg-t-30">
+                    @if ($user->id != '')
                     <button class="btn btn-main-primary pd-x-20" type="submit">تحديث</button>
+                    @else
+                    <button class="btn btn-main-primary pd-x-20" type="submit">تاكيد</button>
+                    @endif
+
                 </div>
             </form>
             </div>
