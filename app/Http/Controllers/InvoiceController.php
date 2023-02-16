@@ -16,6 +16,7 @@ use App\Notifications\AddInvoice;
 use File;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File as FacadesFile;
 use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
 class InvoiceController extends Controller
@@ -239,7 +240,7 @@ class InvoiceController extends Controller
         if(!$request->id_page == 2){
             if (!empty($Details->invoice_number)) {
 
-                File::deleteDirectory(public_path('assets/upload/invoice_attachment/'.$Details->invoice_number));
+                FacadesFile::deleteDirectory(public_path('assets/upload/invoice_attachment/'.$Details->invoice_number));
             }
             $invoices->forceDelete();
             session()->flash('delete_invoice');
