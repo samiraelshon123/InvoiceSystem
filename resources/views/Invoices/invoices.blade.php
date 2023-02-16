@@ -1,7 +1,26 @@
 @extends('layouts.master')
-@section('title')
-قائمة الفواتير
-@stop
+@if($invoice_type == 'paid')
+    @section('title')
+    الفواتير المدفوعة
+    @stop
+@endif
+
+@if($invoice_type == 'unpaid')
+    @section('title')
+    الفواتير الغير مدفوعة
+    @stop
+@endif
+
+@if($invoice_type == 'partial')
+    @section('title')
+    الفواتير المدفوعة جزئيا
+    @stop
+@endif
+@if($invoice_type == 'invoices')
+    @section('title')
+    قائمة الفواتير
+    @stop
+@endif
 
 @section('css')
 <!-- Internal Data table css -->

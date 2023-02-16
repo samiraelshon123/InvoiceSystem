@@ -43,7 +43,8 @@ class InvoiceController extends Controller
     public function index()
     {
         $invoices = Invoice::get();
-        return view('Invoices.invoices', compact('invoices'));
+        $invoice_type = 'invoices';
+        return view('Invoices.invoices', compact('invoices', 'invoice_type'));
     }
 
     /**
@@ -316,16 +317,22 @@ class InvoiceController extends Controller
 
     }
     public function invoice_paid(){
+        $invoice_type = 'paid';
         $invoices = Invoice::where('Value_Status', 1)->get();
-        return view('Invoices.invoices_paid', compact('invoices'));
+        // return view('Invoices.invoices_paid', compact('invoices'));
+        return view('Invoices.invoices', compact('invoices', 'invoice_type'));
     }
     public function invoice_unpaid(){
+        $invoice_type = 'unpaid';
         $invoices = Invoice::where('Value_Status', 2)->get();
-        return view('Invoices.invoices_unpaid', compact('invoices'));
+        // return view('Invoices.invoices_unpaid', compact('invoices'));
+        return view('Invoices.invoices', compact('invoices', 'invoice_type'));
     }
     public function invoice_partial(){
+        $invoice_type = 'partial';
         $invoices = Invoice::where('Value_Status', 3)->get();
-        return view('Invoices.invoices_Partial', compact('invoices'));
+        // return view('Invoices.invoices_Partial', compact('invoices'));
+        return view('Invoices.invoices', compact('invoices', 'invoice_type'));
     }
     public function Print_invoice($id){
         $invoices = Invoice::find($id);
