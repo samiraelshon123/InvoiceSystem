@@ -70,24 +70,36 @@
                         @endif
                         {{ csrf_field() }}
                         {{-- 1 --}}
+                        <div class="row">
+                            <div class="col">
+                                <label for="inputName" class="control-label">اسم العميل</label>
+                                <select name="customer_id" class="form-control SlectBox">
 
+                                    @foreach ($customers as $customer)
+                                        <option value="{{ $customer->id }}" {{($customer->id == $invoice->customer_id) ? 'selected' : ''}}> {{ $customer->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col"></div>
+                            <div class="col"></div>
+                        </div>
                         <div class="row">
                             <div class="col">
                                 <label for="inputName" class="control-label">رقم الفاتورة</label>
                                 <input type="text" class="form-control" id="inputName" name="invoice_number"
-                                    title="يرجي ادخال رقم الفاتورة" value="{{ $invoice->invoice_number }}" required>
+                                    title="يرجي ادخال رقم الفاتورة" value="{{old('invoice_number', $invoice->invoice_number)}}" required>
                             </div>
 
                             <div class="col">
                                 <label>تاريخ الفاتورة</label>
                                 <input class="form-control fc-datepicker" name="invoice_Date" placeholder="YYYY-MM-DD"
-                                    type="text" value="{{ $invoice->invoice_Date }}" required>
+                                    type="text" value="{{ ($invoice->id != '') ? $invoice->invoice_Date : date('Y-m-d') }}" required>
                             </div>
 
                             <div class="col">
                                 <label>تاريخ الاستحقاق</label>
                                 <input class="form-control fc-datepicker" name="Due_date" placeholder="YYYY-MM-DD"
-                                    type="text" value="{{ $invoice->Due_date }}" required>
+                                    type="text" value="{{old('Due_date', $invoice->Due_date)}}" required>
                             </div>
 
                         </div>
@@ -96,7 +108,7 @@
                         <div class="row">
                             <div class="col">
                                 <label for="inputName" class="control-label">القسم</label>
-                                <select name="Section" class="form-control SlectBox" onclick="console.log($(this).val())"
+                                <select name="section_id" class="form-control SlectBox" onclick="console.log($(this).val())"
                                     onchange="console.log('change is firing')">
                                     <!--placeholder-->
 
@@ -117,7 +129,7 @@
                                 <label for="inputName" class="control-label">مبلغ التحصيل</label>
                                 <input type="text" class="form-control" id="inputName" name="Amount_collection"
                                     oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-                                    value="{{ $invoice->Amount_collection }}">
+                                    value="{{old('Amount_collection', $invoice->Amount_collection)}}">
                             </div>
                         </div>
 
@@ -131,7 +143,7 @@
                                 <input type="text" class="form-control form-control-lg" id="Amount_Commission"
                                     name="Amount_Commission" title="يرجي ادخال مبلغ العمولة "
                                     oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-                                    value="{{ $invoice->Amount_Commission }}" required>
+                                    value="{{old('Amount_Commission', $invoice->Amount_Commission)}}" required>
                             </div>
 
                             <div class="col">
@@ -139,7 +151,7 @@
                                 <input type="text" class="form-control form-control-lg" id="Discount" name="Discount"
                                     title="يرجي ادخال مبلغ الخصم "
                                     oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-                                    value="{{ $invoice->Discount }}" required>
+                                    value="{{old('Discount', $invoice->Discount)}}" required>
                             </div>
 
                             <div class="col">
@@ -161,13 +173,13 @@
                             <div class="col">
                                 <label for="inputName" class="control-label">قيمة ضريبة القيمة المضافة</label>
                                 <input type="text" class="form-control" id="Value_VAT" name="Value_VAT"
-                                    value="{{ $invoice->Value_VAT }}" readonly>
+                                    value="{{old('Value_VAT', $invoice->Value_VAT)}}" readonly>
                             </div>
 
                             <div class="col">
                                 <label for="inputName" class="control-label">الاجمالي شامل الضريبة</label>
                                 <input type="text" class="form-control" id="Total" name="Total" readonly
-                                    value="{{ $invoice->Total }}">
+                                    value="{{old('Total', $invoice->Total)}}">
                             </div>
                         </div>
 
@@ -176,7 +188,7 @@
                             <div class="col">
                                 <label for="exampleTextarea">ملاحظات</label>
                                 <textarea class="form-control" id="exampleTextarea" name="note" rows="3">
-                                {{ $invoice->note }}</textarea>
+                                {{old('note', $invoice->note)}}</textarea>
                             </div>
                         </div><br>
 
@@ -234,7 +246,7 @@
 
 <script>
     $(document).ready(function() {
-        $('select[name="Section"]').on('change', function() {
+        $('select[name="section_id"]').on('change', function() {
             var SectionId = $(this).val();
             if (SectionId) {
                 $.ajax({
