@@ -65,7 +65,7 @@
                         <div class="card mg-b-20">
                             <div class="card-header pb-0">
                                 <div class="d-flex justify-content-between">
-                                    @can('اضافة منتج')
+                                    @can('product_add')
 
                                     <a class="modal-effect btn btn-outline-primary btn-block" data-effect="effect-scale"
                                 data-toggle="modal" href="#exampleModal">اضافة منتج</a>
@@ -95,7 +95,7 @@
                                                     <td>{{$product->section->section_name}}</td>
                                                     <td>{{$product->description}}</td>
                                                     <td>
-                                                        @can('تعديل منتج')
+                                                        @can('product_edit')
 
                                                         <button class="btn btn-outline-success btn-sm"
                                                         data-name="{{ $product->Product_name }}" data-pro_id="{{ $product->id }}"
@@ -103,7 +103,7 @@
                                                         data-description="{{ $product->description }}" data-toggle="modal"
                                                         data-target="#edit_Product">تعديل</button>
                                                         @endcan
-                                                        @can('حذف منتج')
+                                                        @can('product_delete')
 
                                                         <button class="btn btn-outline-danger btn-sm " data-pro_id="{{ $product->id }}"
                                                             data-product_name="{{ $product->Product_name }}" data-toggle="modal"

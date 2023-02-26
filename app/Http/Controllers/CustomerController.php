@@ -11,9 +11,9 @@ class CustomerController extends Controller
     function __construct()
     {
 
-        $this->middleware('permission:اضافة عميل', ['only' => ['create','store']]);
-        $this->middleware('permission:تعديل عميل', ['only' => ['edit','update']]);
-        $this->middleware('permission:حذف عميل', ['only' => ['destroy']]);
+        $this->middleware('permission:customer_add', ['only' => ['create','store']]);
+        $this->middleware('permission:customer_edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:customer_delete', ['only' => ['destroy']]);
 
     }
     public function index(Request $request)

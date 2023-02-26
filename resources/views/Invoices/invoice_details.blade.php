@@ -148,7 +148,7 @@
                                                             @elseif ($invoices->Value_Status == 1)
                                                             <th scope="row">المبلغ المدفوع</th>
                                                             <td>{{ $invoices->Total }}</td>
-                                                            
+
                                                             @endif
 
 
@@ -232,7 +232,7 @@
                                                                 <label class="custom-file-label" for="customFile">حدد
                                                                     المرفق</label>
                                                             </div><br><br>
-                                                            @can('اضافة مرفق')
+                                                            @can('attachement_add')
 
                                                             <button type="submit" class="btn btn-primary btn-sm "
                                                                 name="uploadedFile">تاكيد</button>
@@ -264,7 +264,7 @@
                                                                     <td>{{ $attachment->Created_by }}</td>
                                                                     <td>{{ $attachment->created_at }}</td>
                                                                     <td colspan="2">
-                                                                        @can('عرض المرفق')
+                                                                        @can('attachement_show')
 
                                                                         <a class="btn btn-outline-success btn-sm"
                                                                         href="{{ route('View_file', ['invoice_number'=>$invoices->invoice_number, 'file_name'=>$attachment->file_name]) }}"
@@ -273,7 +273,7 @@
                                                                             عرض</a>
 
                                                                         @endcan
-                                                                        @can('تحميل المرفق')
+                                                                        @can('attachement_download')
 
                                                                         <a class="btn btn-outline-info btn-sm"
                                                                             href="{{ route('download', ['invoice_number'=>$invoices->invoice_number, 'file_name'=>$attachment->file_name]) }}"
@@ -282,7 +282,7 @@
                                                                             تحميل</a>
 
                                                                             @endcan
-                                                                        @can('حذف المرفق')
+                                                                        @can('attachement_delete')
 
                                                                             <button class="btn btn-outline-danger btn-sm"
                                                                                 data-toggle="modal"

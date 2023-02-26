@@ -67,7 +67,7 @@
                 <div class="d-flex justify-content-between">
                     <div class="col-lg-12 margin-tb">
                         <div class="pull-right">
-                            @can('اضافة صلاحية')
+                            @can('role_add')
                                 <a class="btn btn-primary btn-sm" href="{{ route('roles.create') }}">اضافة</a>
                             @endcan
                         </div>
@@ -92,18 +92,18 @@
                                     <td>{{ ++$i }}</td>
                                     <td>{{ $role->name }}</td>
                                     <td>
-                                        @can('عرض صلاحية')
+                                        @can('role_show')
                                             <a class="btn btn-success btn-sm"
                                                 href="{{ route('roles.show', $role->id) }}">عرض</a>
                                         @endcan
 
-                                        @can('تعديل صلاحية')
+                                        @can('role_edit')
                                             <a class="btn btn-primary btn-sm"
                                                 href="{{ route('roles.edit', $role->id) }}">تعديل</a>
                                         @endcan
 
                                         @if ($role->name !== 'owner')
-                                            @can('حذف صلاحية')
+                                            @can('role_delete')
 
                                                 <form action="{{route('roles.destroy', $role->id)}}" method="POST" style ='display:inline'>
                                                     @csrf

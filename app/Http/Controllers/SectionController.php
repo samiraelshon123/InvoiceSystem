@@ -16,9 +16,9 @@ class SectionController extends Controller
     function __construct()
     {
 
-        $this->middleware('permission:اضافة قسم', ['only' => ['store']]);
-        $this->middleware('permission:تعديل قسم', ['only' => ['update']]);
-        $this->middleware('permission:حذف قسم', ['only' => ['destroy']]);
+        $this->middleware('permission:section_add', ['only' => ['store']]);
+        $this->middleware('permission:section_edit', ['only' => ['update']]);
+        $this->middleware('permission:section_delete', ['only' => ['destroy']]);
 
     }
     public function index()

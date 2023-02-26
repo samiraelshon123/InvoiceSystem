@@ -23,10 +23,10 @@ class InvoiceDetailsController extends Controller
     function __construct()
     {
 
-        $this->middleware('permission:حذف المرفق', ['only' => ['destroy']]);
-        $this->middleware('permission:عرض الفاتوره', ['only' => ['edit']]);
-        $this->middleware('permission:تحميل المرفق', ['only' => ['get_file']]);
-        $this->middleware('permission:عرض المرفق', ['only' => ['open_file']]);
+        $this->middleware('permission:attachement_delete', ['only' => ['destroy']]);
+        $this->middleware('permission:invoice_show', ['only' => ['edit']]);
+        $this->middleware('permission:attachement_download', ['only' => ['get_file']]);
+        $this->middleware('permission:attachement_show', ['only' => ['open_file']]);
 
     }
     public function index()

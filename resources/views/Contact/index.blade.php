@@ -84,7 +84,7 @@
                                                                 class="btn ripple btn-primary btn-sm" data-toggle="dropdown"
                                                                 type="button">العمليات<i class="fas fa-caret-down ml-1"></i></button>
                                                             <div class="dropdown-menu tx-13">
-                                                                @can('تعديل فاتوره')
+                                                                @can('contact_edit')
 
                                                                 <a class="dropdown-item"
                                                                     href=" {{ route('contacts.edit', $contact->id) }}"><i class="fas fa-edit"></i>&nbsp;&nbsp;تعديل

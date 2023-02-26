@@ -29,16 +29,16 @@ class InvoiceController extends Controller
     function __construct()
     {
 
-        $this->middleware('permission:قائمة الفواتير', ['only' => ['index']]);
-        $this->middleware('permission:اضافة فاتورة', ['only' => ['create','store']]);
-        $this->middleware('permission:تعديل فاتوره', ['only' => ['edit','update']]);
-        $this->middleware('permission:حذف الفاتورة', ['only' => ['destroy']]);
-        $this->middleware('permission:تغير حالة الدفع', ['only' => ['show', 'Status_Update']]);
-        $this->middleware('permission:الفواتير المدفوعة', ['only' => ['invoice_paid']]);
-        $this->middleware('permission:الفواتير الغير مدفوعة', ['only' => ['invoice_unpaid']]);
-        $this->middleware('permission:الفواتير المدفوعة جزئيا', ['only' => ['invoice_partial']]);
-        $this->middleware('permission:طباعةالفاتورة', ['only' => ['Print_invoice']]);
-        $this->middleware('permission:تصدير EXCEL', ['only' => ['export']]);
+        $this->middleware('permission:invoices_list', ['only' => ['index']]);
+        $this->middleware('permission:invoice_add', ['only' => ['create','store']]);
+        $this->middleware('permission:invoice_edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:invoice_delete', ['only' => ['destroy']]);
+        $this->middleware('permission:payment_status_change', ['only' => ['show', 'Status_Update']]);
+        $this->middleware('permission:paid_invoices', ['only' => ['invoice_paid']]);
+        $this->middleware('permission:unpaid_invoices', ['only' => ['invoice_unpaid']]);
+        $this->middleware('permission:partial_invoices', ['only' => ['invoice_partial']]);
+        $this->middleware('permission:invoice_print', ['only' => ['Print_invoice']]);
+        $this->middleware('permission:excel_export', ['only' => ['export']]);
 
     }
     public function index()

@@ -13,9 +13,9 @@ class UserController extends Controller
     function __construct()
     {
 
-        $this->middleware('permission:اضافة مستخدم', ['only' => ['create','store']]);
-        $this->middleware('permission:تعديل مستخدم', ['only' => ['edit','update']]);
-        $this->middleware('permission:حذف مستخدم', ['only' => ['destroy']]);
+        $this->middleware('permission:user_add', ['only' => ['create','store']]);
+        $this->middleware('permission:user_edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:user_delete', ['only' => ['destroy']]);
 
     }
     public function index(Request $request)

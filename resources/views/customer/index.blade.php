@@ -43,7 +43,7 @@
         <div class="card">
             <div class="card-header pb-0">
                 <div class="col-sm-1 col-md-2">
-                    @can('اضافة عميل')
+                    @can('customer_add')
                         <a class="btn btn-primary btn-sm" href="{{ route('customers.create') }}">اضافة عميل</a>
                     @endcan
                 </div>
@@ -73,12 +73,12 @@
                                     <td>{{($user->type ==0 ? 'زبون' : 'مورد')}}</td>
 
                                     <td>
-                                        @can('تعديل عميل')
+                                        @can('customer_edit')
                                             <a href="{{ route('customers.edit', $user->id) }}" class="btn btn-sm btn-info"
                                                 title="تعديل"><i class="las la-pen"></i></a>
                                         @endcan
 
-                                        @can('حذف عميل')
+                                        @can('customer_delete')
                                             <a class="modal-effect btn btn-sm btn-danger" data-effect="effect-scale"
                                                 data-user_id="{{ $user->id }}" data-username="{{ $user->name }}"
                                                 data-toggle="modal" href="#modaldemo8" title="حذف"><i

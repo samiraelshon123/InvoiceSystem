@@ -15,7 +15,7 @@ class InvoiceAttachmentController extends Controller
     function __construct()
     {
 
-        $this->middleware('permission:اضافة مرفق', ['only' => ['store']]);
+        $this->middleware('permission:attachement_add', ['only' => ['store']]);
 
     }
     public function index()

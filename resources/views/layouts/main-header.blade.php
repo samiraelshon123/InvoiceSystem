@@ -12,10 +12,10 @@
 							<a class="open-toggle" href="#"><i class="header-icon fe fe-align-left" ></i></a>
 							<a class="close-toggle" href="#"><i class="header-icons fe fe-x"></i></a>
 						</div>
-						
+
 					</div>
 					<div class="main-header-right">
-						
+
 						<div class="nav nav-item  navbar-nav-right ml-auto">
 							<div class="nav-link" id="bs-example-navbar-collapse-1">
 								<form class="navbar-form" role="search">
@@ -32,8 +32,8 @@
 									</div>
 								</form>
 							</div>
-							
-                            @can('الاشعارات')
+
+                            @can('notification')
 							<div class="dropdown nav-item main-header-notification">
 								<a class="new nav-link" href="#">
 								<svg xmlns="http://www.w3.org/2000/svg" class="header-icon-svgs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bell"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg><span class=" pulse"></span></a>
@@ -41,7 +41,7 @@
 									<div class="menu-header-content bg-primary text-right">
 										<div class="d-flex">
 											<h6 class="dropdown-title mb-1 tx-15 text-white font-weight-semibold" id="notifications_count">الاشعارات</h6>
-                                            
+
 											<span class="badge badge-pill badge-warning mr-auto my-auto float-left"><a href="{{ route('seeAll') }}">تعيين قراءة الكل</a></span>
 										</div>
 										<p class="dropdown-title-text subtext mb-0 text-white op-6 pb-0 tx-12 ">عدد الاشعارات الغير مقروءه{{ \App\Models\Notification::where('is_seen', 0)->count() }}</p>
@@ -51,7 +51,7 @@
                                     @endphp
 									<div class="main-notification-list Notification-scroll" id="unreadNotifications">
                                         @foreach ($notifications as $notification)
-                                          
+
                                             <a class="d-flex p-3 border-bottom" href="{{ route('invoiceDetails.edit', $notification->invoice_id) }}">
                                                 <div class="notifyimg bg-pink">
                                                     <i class="la la-file-alt text-white"></i>
@@ -64,10 +64,10 @@
                                                     <i class="las la-angle-left text-left text-muted"></i>
                                                 </div>
                                             </a>
-										  
+
                                         @endforeach
 									</div>
-									
+
 								</div>
 							</div>
                             @endcan
@@ -97,7 +97,7 @@
 
 								</div>
 							</div>
-							
+
 						</div>
 					</div>
 				</div>
